@@ -91,6 +91,7 @@ namespace GXPEngine
 		/// </param>
 		public Game (int pWidth, int pHeight, bool pFullScreen, bool pVSync = true, int pRealWidth=-1, int pRealHeight=-1, bool pPixelArt=false) : base()
 		{
+			
 			if (pRealWidth <= 0) {
 				pRealWidth = pWidth;
 			}
@@ -115,7 +116,7 @@ namespace GXPEngine
 				_glContext = new GLContext (this);
 				_glContext.CreateWindow (pWidth, pHeight, pFullScreen, pVSync, pRealWidth, pRealHeight);
 
-				_renderRange = new Rectangle (0, 0, pWidth, pHeight);
+				_renderRange = new Rectangle(0, 0, pWidth, pHeight);
 
 				//register ourselves for updates
 				Add (this);

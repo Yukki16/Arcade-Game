@@ -15,23 +15,16 @@ public class MyGame : Game
 	 
 	 */
 	
-	public MyGame() : base(1024/2, 576/2, false, false, 1024, 576, true)
+	public MyGame() : base(800, 600, false)
 	{
-		
-		sceneManager = new GXPEngine.Scenes.SceneManager();
-		AddChild(sceneManager);
-
-		sceneManager.LoadLevel("MainMenu");
+			
 	}
 
 	// For every game object, Update is called every frame, by the engine:
 	void Update()
 	{
 		
-		if(Input.GetKeyDown(Key.K))
-        {
-            Console.WriteLine(GetDiagnostics());
-        }
+		
 		
 	}
 

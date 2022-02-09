@@ -15,10 +15,12 @@ namespace GXPEngine
         Sprite rightComboArrow;
         Sprite upComboArrow;
 
-        MyGame.Player playerNumeber;
+        ManagerAndStuff.Player playerNumeber;
+
+        int perfect, half, whiff;
 
         int keyLeft, keyUp, keyRight; //the custom keys for the input of the player (will be read from Settings)
-        public PlayerKeysCombo(MyGame.Player playerNumber)
+        public PlayerKeysCombo(ManagerAndStuff.Player playerNumber)
         {
             this.playerNumeber = playerNumber;
 
@@ -26,11 +28,11 @@ namespace GXPEngine
             upComboArrow = new Sprite("Art/ComboKeySprites/Up.png");
             rightComboArrow = new Sprite("Art/ComboKeySprites/Right.png");
 
-            if (playerNumber == MyGame.Player.P1)
+            if (playerNumber == ManagerAndStuff.Player.P1)
             {
-                leftComboArrow.SetXY(0, game.height - leftComboArrow.height);
-                upComboArrow.SetXY(upComboArrow.width, game.height - upComboArrow.height);
-                rightComboArrow.SetXY(rightComboArrow.width * 2, game.height - rightComboArrow.height);
+                leftComboArrow.SetXY(0, game.height / 2); //- leftComboArrow.height);
+                upComboArrow.SetXY(upComboArrow.width, game.height / 2);//- upComboArrow.height);
+                rightComboArrow.SetXY(rightComboArrow.width * 2, game.height / 2); //- rightComboArrow.height);
             }
             else
             {
@@ -63,34 +65,52 @@ namespace GXPEngine
             GameObject[] leftArrows = this.FindObjectsOfType<LeftArrowCombo>();
             GameObject[] upArrows = this.FindObjectsOfType<UpArrowCombo>();
             GameObject[] rightArrows = this.FindObjectsOfType<RightArrowCombo>();
-            if (Input.GetKey(keyUp))
+            if (Input.GetKeyDown(keyUp))
             {
-                if (upArrows[0] != null)
-                    if (upArrows[0].y - leftComboArrow.height >= upComboArrow.y)
+                foreach(ArrowCombo upA in upArrows)
+                    if (upComboArrow.HitTest(upA))
                     {
+                        if (upA.y - upA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
+                        {
+                            perfect++;
+                        }
+                        else if((upA.y - upA.height / 2 >= upComboArrow.y && upA.y - upA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (upA.y - upA.height / 2 >= upComboArrow.y - upComboArrow.height && upA.y - upA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
+                        {
+                            half++;
+                        }
+                        else
+                        {
+                            whiff++;
+                        }
                         Console.WriteLine("hitU");
-                        upArrows[0].Remove();
+                        upA.DestroyArrow();
+
+                        Console.WriteLine("perfect: " + perfect);
+                        Console.WriteLine("half: " + half);
+                        Console.WriteLine("whiff: " + whiff);
                     }
             }
-            if (Input.GetKey(keyLeft))
+            if (Input.GetKeyDown(keyLeft))
             {
-                if (leftArrows[0] != null)
-                    if (leftArrows[0].y - leftComboArrow.height >= leftComboArrow.y)
+                foreach (ArrowCombo leftA in leftArrows)
+                    if (leftComboArrow.HitTest(leftA))
                     {
                         Console.WriteLine("hitL");
-                        leftArrows[0].Remove();
+                        leftA.DestroyArrow();
                     }
             }
-            if (Input.GetKey(keyRight))
+            if (Input.GetKeyDown(keyRight))
             {
-                if (rightArrows[0] != null)
-                    if (rightArrows[0].y - leftComboArrow.height >= rightComboArrow.y)
+                foreach (ArrowCombo rightA in rightArrows)
+                    if (rightComboArrow.HitTest(rightA)) 
                     {
                         Console.WriteLine("hitR");
-                        rightArrows[0].Remove();
+                        rightA.DestroyArrow();
+                        Console.WriteLine(rightArrows.Length);
                     }
+                //Console.WriteLine(rightArrows.Length);
             }
-
+            
         }
 
         private void randomArrows()  //used for now, I will change later to read from a file all the arrows that corespond to the song

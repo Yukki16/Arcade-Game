@@ -8,9 +8,9 @@ namespace GXPEngine
     class LeftArrowCombo : ArrowCombo
     {
         
-        public LeftArrowCombo(MyGame.Player playerNumber) : base("Art/ComboKeySprites/Left.png")
+        public LeftArrowCombo(ManagerAndStuff.Player playerNumber) : base("Art/ComboKeySprites/Left.png")
         {
-            if(playerNumber == MyGame.Player.P1)
+            if(playerNumber == ManagerAndStuff.Player.P1)
             {
                 this.x = 0;
             }
@@ -18,11 +18,6 @@ namespace GXPEngine
             {
                 this.x = game.width - this.width * 3;
             }
-        }
-
-        public void Update()
-        {
-            y += 3;
         }
     }
 }

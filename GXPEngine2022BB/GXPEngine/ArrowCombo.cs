@@ -8,14 +8,19 @@ namespace GXPEngine
 {
     class ArrowCombo : Sprite
     {
-        
+        private float speed = 1;
         public ArrowCombo(string texturePath) : base(texturePath)
         {
             y = 0;
         }
-        private void Update()
+        public void Update()
         {
-            y+=5;
+            y+=speed;
+        }
+
+        public void DestroyArrow()
+        {
+            this.Destroy();
         }
     }
 }

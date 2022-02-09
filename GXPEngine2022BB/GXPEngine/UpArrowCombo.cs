@@ -7,9 +7,9 @@ namespace GXPEngine
 {
     class UpArrowCombo : ArrowCombo
     {
-        public UpArrowCombo(MyGame.Player playerNumber) : base("Art/ComboKeySprites/Up.png")
+        public UpArrowCombo(ManagerAndStuff.Player playerNumber) : base("Art/ComboKeySprites/Up.png")
         {
-            if (playerNumber == MyGame.Player.P1)
+            if (playerNumber == ManagerAndStuff.Player.P1)
             {
                 this.x = 0 + this.width;
             }
@@ -17,11 +17,6 @@ namespace GXPEngine
             {
                 this.x = game.width - this.width * 2;
             }
-        }
-
-        public void Update()
-        {
-            y += 3;
         }
     }
 }

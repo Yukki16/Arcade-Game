@@ -5,20 +5,16 @@ using System.Drawing;                           // System.Drawing contains drawi
 
 public class MyGame : Game
 {
-	public enum Player
-    {
-		P1,
-		P2
-    }
+	ManagerAndStuff.Difficulty difficultySetting;
 
 	PlayerKeysCombo playerOne;
 	PlayerKeysCombo playerTwo;
 	public MyGame() : base(800, 600, false)
 	{
-		playerOne = new PlayerKeysCombo(Player.P1);
+		playerOne = new PlayerKeysCombo(ManagerAndStuff.Player.P1);
 		playerOne.SetKeys(65, 87, 68);
 
-		playerTwo = new PlayerKeysCombo(Player.P2);
+		playerTwo = new PlayerKeysCombo(ManagerAndStuff.Player.P2);
 		playerTwo.SetKeys(285, 283, 286);
 		AddChild(playerOne);
 		AddChild(playerTwo);

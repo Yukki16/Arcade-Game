@@ -5,19 +5,24 @@ using System.Drawing;                           // System.Drawing contains drawi
 
 public class MyGame : Game
 {
-	GXPEngine.Scenes.SceneManager sceneManager;
+	public enum Player
+    {
+		P1,
+		P2
+    }
 
-	// TO DO LIST
-	/*
-	 1.Refactor the player movement
-	 2.Add the settings and choose level menus
-	 3.Add music
-	 
-	 */
-	
+	PlayerKeysCombo playerOne;
+	PlayerKeysCombo playerTwo;
 	public MyGame() : base(800, 600, false)
 	{
-			
+		playerOne = new PlayerKeysCombo(Player.P1);
+		playerOne.SetKeys(65, 87, 68);
+
+		playerTwo = new PlayerKeysCombo(Player.P2);
+		playerTwo.SetKeys(285, 283, 286);
+		AddChild(playerOne);
+		AddChild(playerTwo);
+
 	}
 
 	// For every game object, Update is called every frame, by the engine:

@@ -95,6 +95,24 @@ namespace GXPEngine
                 foreach (ArrowCombo leftA in leftArrows)
                     if (leftComboArrow.HitTest(leftA))
                     {
+                        if (leftA.y - leftA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
+                        {
+                            perfect++;
+                        }
+                        else if ((leftA.y - leftA.height / 2 >= upComboArrow.y && leftA.y - leftA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (leftA.y - leftA.height / 2 >= upComboArrow.y - upComboArrow.height && leftA.y - leftA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
+                        {
+                            half++;
+                        }
+                        else
+                        {
+                            whiff++;
+                        }
+                        Console.WriteLine("hitU");
+                        leftA.DestroyArrow();
+
+                        Console.WriteLine("perfect: " + perfect);
+                        Console.WriteLine("half: " + half);
+                        Console.WriteLine("whiff: " + whiff);
                         Console.WriteLine("hitL");
                         leftA.DestroyArrow();
                     }
@@ -104,6 +122,24 @@ namespace GXPEngine
                 foreach (ArrowCombo rightA in rightArrows)
                     if (rightComboArrow.HitTest(rightA)) 
                     {
+                        if (rightA.y - rightA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
+                        {
+                            perfect++;
+                        }
+                        else if ((rightA.y - rightA.height / 2 >= upComboArrow.y && rightA.y - rightA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (rightA.y - rightA.height / 2 >= upComboArrow.y - upComboArrow.height && rightA.y - rightA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
+                        {
+                            half++;
+                        }
+                        else
+                        {
+                            whiff++;
+                        }
+                        Console.WriteLine("hitU");
+                        rightA.DestroyArrow();
+
+                        Console.WriteLine("perfect: " + perfect);
+                        Console.WriteLine("half: " + half);
+                        Console.WriteLine("whiff: " + whiff);
                         Console.WriteLine("hitR");
                         rightA.DestroyArrow();
                         Console.WriteLine(rightArrows.Length);

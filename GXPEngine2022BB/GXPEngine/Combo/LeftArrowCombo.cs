@@ -8,9 +8,9 @@ namespace GXPEngine
     class LeftArrowCombo : ArrowCombo
     {
         
-        public LeftArrowCombo(ManagerAndStuff.Player playerNumber) : base("Art/ComboKeySprites/Left.png")
+        public LeftArrowCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty) : base("Art/ComboKeySprites/Pink_Tile.png", difficulty)
         {
-            if(playerNumber == ManagerAndStuff.Player.P1)
+            if(playerNumber == SceneManager.Player.P1)
             {
                 this.x = 0;
             }

@@ -7,9 +7,9 @@ namespace GXPEngine
 {
     class UpArrowCombo : ArrowCombo
     {
-        public UpArrowCombo(ManagerAndStuff.Player playerNumber) : base("Art/ComboKeySprites/Up.png")
+        public UpArrowCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty) : base("Art/ComboKeySprites/Purple_Tile.png", difficulty)
         {
-            if (playerNumber == ManagerAndStuff.Player.P1)
+            if (playerNumber == SceneManager.Player.P1)
             {
                 this.x = 0 + this.width;
             }

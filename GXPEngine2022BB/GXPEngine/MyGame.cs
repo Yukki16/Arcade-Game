@@ -5,20 +5,13 @@ using System.Drawing;                           // System.Drawing contains drawi
 
 public class MyGame : Game
 {
-	ManagerAndStuff.Difficulty difficultySetting;
+	SceneManager sceneManager;
 
-	PlayerKeysCombo playerOne;
-	PlayerKeysCombo playerTwo;
+	
 	public MyGame() : base(Settings.Width, Settings.Height, Settings.FullScreen, true, Settings.ScreenResolutionX, Settings.ScreenResolutionY)
 	{
-		playerOne = new PlayerKeysCombo(ManagerAndStuff.Player.P1);
-		playerOne.SetKeys(Settings.P1Left, Settings.P1Up, Settings.P1Right);
-		AddChild(playerOne);
-
-		playerTwo = new PlayerKeysCombo(ManagerAndStuff.Player.P2);
-		playerTwo.SetKeys(Settings.P2Left, Settings.P2Up, Settings.P2Right);
-		AddChild(playerTwo);
-
+		sceneManager = new SceneManager(SceneManager.Scenes.GameScene);
+		AddChild(sceneManager);
 	}
 
 	// For every game object, Update is called every frame, by the engine:

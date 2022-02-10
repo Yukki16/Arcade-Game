@@ -7,9 +7,9 @@ namespace GXPEngine
 {
     class RightArrowCombo : ArrowCombo
     {
-        public RightArrowCombo(ManagerAndStuff.Player playerNumber) : base("Art/ComboKeySprites/Right.png")
+        public RightArrowCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty) : base("Art/ComboKeySprites/Red_Tile.png", difficulty)
         {
-            if (playerNumber == ManagerAndStuff.Player.P1)
+            if (playerNumber == SceneManager.Player.P1)
             {
                 this.x = 0 + this.width * 2;
             }

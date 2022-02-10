@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Combo\ArrowCombo.cs" />
+    <Compile Include="ReadComboFiles.cs" />
     <Compile Include="Scenes\GameScene.cs" />
     <Compile Include="GXPEngine\AddOns\Gizmos.cs" />
     <Compile Include="GXPEngine\AddOns\SpriteBatch.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Combo\PlayerKeysCombo.cs" />
     <Compile Include="Combo\RightArrowCombo.cs" />
     <Compile Include="Scenes\Scene.cs" />
+    <Compile Include="SFX.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="Combo\UpArrowCombo.cs" />
   </ItemGroup>

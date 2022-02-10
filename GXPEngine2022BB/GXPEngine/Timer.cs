@@ -15,7 +15,7 @@ namespace GXPEngine
         float clock = 0f;
         public Timer()
         {
-            time = 180;
+            time = 63;
             easyDraw = new EasyDraw(Settings.Width, Settings.Height, false);
             easyDraw.SetXY(0, 0);
             easyDraw.TextAlign(CenterMode.Center, CenterMode.Center);

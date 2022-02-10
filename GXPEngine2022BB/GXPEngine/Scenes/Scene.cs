@@ -8,6 +8,7 @@ namespace GXPEngine
     abstract class Scene : GameObject
     {
         public Sprite background;
+        
         public Scene()
         {
         }

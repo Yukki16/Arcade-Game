@@ -2,15 +2,15 @@ using System;									// System contains a lot of default C# libraries
 using GXPEngine;                                // GXPEngine contains the engine
 using TiledMapParser;
 using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
-
 public class MyGame : Game
 {
 	SceneManager sceneManager;
 
-	
 	public MyGame() : base(Settings.Width, Settings.Height, Settings.FullScreen, true, Settings.ScreenResolutionX, Settings.ScreenResolutionY)
 	{
-		sceneManager = new SceneManager(SceneManager.Scenes.GameScene);
+		sceneManager = new SceneManager();
+		sceneManager.sfx.LoadSongs();
+		sceneManager.LoadScene(SceneManager.Scenes.GameScene);
 		AddChild(sceneManager);
 	}
 
@@ -22,6 +22,8 @@ public class MyGame : Game
 
 	static void Main()
 	{
+		
+		
 		Settings.Load();
 		if (Settings.FullScreen)
 		{

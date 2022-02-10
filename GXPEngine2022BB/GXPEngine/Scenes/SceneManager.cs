@@ -28,11 +28,19 @@ namespace GXPEngine
             PlayerMenu,
             SongMenu
         }
-        public SceneManager(Scenes sceneToLoad)
+
+        public SFX sfx = new SFX();
+        public SceneManager()
         {
-            if(sceneToLoad == Scenes.GameScene)
+            
+        }
+
+        public void LoadScene(Scenes sceneToLoad)
+        {
+            if (sceneToLoad == Scenes.GameScene)
             {
                 this.AddChild(new GameScene(Difficulty.Easy));
+                sfx.Song_1.Play(false, 0, 0.5f, 0);
             }
         }
     }

@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Character.cs" />
     <Compile Include="Combo\ArrowCombo.cs" />
     <Compile Include="ReadComboFiles.cs" />
     <Compile Include="Scenes\GameScene.cs" />
@@ -100,9 +101,9 @@
     <Compile Include="Combo\PlayerKeysCombo.cs" />
     <Compile Include="Combo\RightArrowCombo.cs" />
     <Compile Include="Scenes\Scene.cs" />
-    <Compile Include="SFX.cs" />
-    <Compile Include="Timer.cs" />
-    <Compile Include="Combo\UpArrowCombo.cs" />
+    <Compile Include="SFX\SFX.cs" />
+    <Compile Include="UI.cs" />
+    <Compile Include="Combo\MiddleArrowCombo.cs" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

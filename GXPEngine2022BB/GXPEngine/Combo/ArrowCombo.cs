@@ -9,6 +9,7 @@ namespace GXPEngine
     abstract class ArrowCombo : Sprite
     {
         private float speed = 1;
+        public int pozitionInList;
         public ArrowCombo(string texturePath, SceneManager.Difficulty difficulty) : base(texturePath)
         {
             if(difficulty == SceneManager.Difficulty.Easy)
@@ -22,7 +23,8 @@ namespace GXPEngine
             {
                 speed = 3;
             }
-            y = 0;
+            //this.endOfCombo = endOfCombo;
+            y = this.height;
         }
         public void Update()
         {

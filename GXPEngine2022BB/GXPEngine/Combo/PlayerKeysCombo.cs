@@ -2,16 +2,22 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using EasyXLS;
 
 namespace GXPEngine
 {
     class PlayerKeysCombo : GameObject
     {
-        Random random = new Random();
+        GameScene theParent;
+
+        public ReadComboFiles readComboFiles;
+        public int pozitionInList = 0; // to be renamed :/
+        
         float timer = 0f;
 
         bool destroiedOne = false;
+
+        private int score;
+        private int comboScore;
 
         //the sprites which will check the combo
         Sprite leftComboArrow;
@@ -24,8 +30,11 @@ namespace GXPEngine
         int perfect, half, whiff;
 
         int keyLeft, keyUp, keyRight; //the custom keys for the input of the player (will be read from Settings)
-        public PlayerKeysCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty)
+        public PlayerKeysCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty, GameScene gameScene)
         {
+            this.theParent = gameScene;
+            readComboFiles = new ReadComboFiles("MusicCombos/Song_1_easy.csv");
+
             this.difficulty = difficulty;
             this.playerNumeber = playerNumber;
 
@@ -58,47 +67,61 @@ namespace GXPEngine
             keyUp = up;
         }
 
-        void Update()
+        private void Update()
         {
             this.Combo();
-            randomArrows();
+            SpawnArrows();
             ClearArrows();
+            
         }
 
         private void Combo() // checks if the player hit the combo when pressing the input
         {                                       //later to be added: Combo perfection
 
             GameObject[] leftArrows = this.FindObjectsOfType<LeftArrowCombo>();
-            GameObject[] upArrows = this.FindObjectsOfType<UpArrowCombo>();
+            GameObject[] middleArrows = this.FindObjectsOfType<MiddleArrowCombo>();
             GameObject[] rightArrows = this.FindObjectsOfType<RightArrowCombo>();
+
+            bool inflictDamage = false;
+
             if (Input.GetKeyDown(keyUp))
             {
-                foreach (ArrowCombo upA in upArrows)
+                foreach (ArrowCombo middleA in middleArrows)
                 {
                     if (destroiedOne)
                         break;
-                    if (upComboArrow.HitTest(upA))
+
+                    if (readComboFiles.endCombo[middleA.pozitionInList + 1] == "1")
+                        inflictDamage = true;
+
+                    if (upComboArrow.HitTest(middleA))
                     {
-                        if (upA.y - upA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
+                        if (middleA.y - middleA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
+                            comboScore += 1000;
+                            score += 1000;
                         }
-                        else if ((upA.y - upA.height / 2 >= upComboArrow.y && upA.y - upA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (upA.y - upA.height / 2 >= upComboArrow.y - upComboArrow.height && upA.y - upA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
+                        else if ((middleA.y - middleA.height / 2 >= upComboArrow.y && middleA.y - middleA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (middleA.y - middleA.height / 2 >= upComboArrow.y - upComboArrow.height && middleA.y - middleA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
                             half++;
+                            comboScore += 700;
+                            score += 700;
                         }
                         else
                         {
                             whiff++;
+                            comboScore += 500;
+                            score += 500;
                         }
 
                         destroiedOne = true;
-                        //Console.WriteLine("hitU");
-                        upA.DestroyArrow();
+                        
+                        middleA.DestroyArrow();
 
-                        Console.WriteLine("perfect: " + perfect);
+                        /*Console.WriteLine("perfect: " + perfect);
                         Console.WriteLine("half: " + half);
-                        Console.WriteLine("whiff: " + whiff);
+                        Console.WriteLine("whiff: " + whiff);*/
                     }
                 }
             }
@@ -108,29 +131,39 @@ namespace GXPEngine
                 {
                     if (destroiedOne)
                         break;
+
+                    if (readComboFiles.endCombo[leftA.pozitionInList + 1] == "1")
+                        inflictDamage = true;
+
                     if (leftComboArrow.HitTest(leftA))
                     {
                         if (leftA.y - leftA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
+                            comboScore += 1000;
+                            score += 1000;
                         }
                         else if ((leftA.y - leftA.height / 2 >= upComboArrow.y && leftA.y - leftA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (leftA.y - leftA.height / 2 >= upComboArrow.y - upComboArrow.height && leftA.y - leftA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
                             half++;
+                            comboScore += 700;
+                            score += 700;
                         }
                         else
                         {
-                            whiff++;
+                            whiff++; 
+                            comboScore += 500;
+                            score += 500;
                         }
                         destroiedOne = true;
-                        Console.WriteLine("hitU");
+                        
                         leftA.DestroyArrow();
 
-                        Console.WriteLine("perfect: " + perfect);
+                        /*Console.WriteLine("perfect: " + perfect);
                         Console.WriteLine("half: " + half);
                         Console.WriteLine("whiff: " + whiff);
                         //Console.WriteLine("hitL");
-                        leftA.DestroyArrow();
+                        leftA.DestroyArrow();*/
                     }
                 }
             }
@@ -140,57 +173,80 @@ namespace GXPEngine
                 {
                     if (destroiedOne)
                         break;
+                   
+                    if (readComboFiles.endCombo[rightA.pozitionInList + 1] == "1")
+                        inflictDamage = true;
+
                     if (rightComboArrow.HitTest(rightA))
                     {
                         if (rightA.y - rightA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
+                            comboScore += 1000;
+                            score += 1000;
                         }
                         else if ((rightA.y - rightA.height / 2 >= upComboArrow.y && rightA.y - rightA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (rightA.y - rightA.height / 2 >= upComboArrow.y - upComboArrow.height && rightA.y - rightA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
                             half++;
+                            comboScore += 700;
+                            score += 700;
                         }
                         else
                         {
                             whiff++;
+                            comboScore += 500;
+                            score += 500;
                         }
 
                         destroiedOne = true;
-                        Console.WriteLine("hitU");
+                        //Console.WriteLine("hitU");
                         rightA.DestroyArrow();
 
-                        Console.WriteLine("perfect: " + perfect);
+                        /*Console.WriteLine("perfect: " + perfect);
                         Console.WriteLine("half: " + half);
                         Console.WriteLine("whiff: " + whiff);
                         //Console.WriteLine("hitR");
                         rightA.DestroyArrow();
-                        //Console.WriteLine(rightArrows.Length);
+                        //Console.WriteLine(rightArrows.Length);*/
                     }
                 }
                 //Console.WriteLine(rightArrows.Length);
             }
 
+            if(inflictDamage)
+            {
+                theParent.InflictDamage();
+            }
             destroiedOne = false;
+            
         }
 
-        private void randomArrows()  //used for now, I will change later to read from a file all the arrows that corespond to the song
+
+        private void SpawnArrows()  //used for now, I will change later to read from a file all the arrows that corespond to the song //// Done
         {
-            if (Time.time - timer > 1000) //for now spawns a random arrow every 1 second
+            if (Time.time - timer > 1000) //for now spawns an arrow every 1 second from .cvs file
             {
                 timer = Time.time;
-                int copy = random.Next(1, 4);
-                if (copy == 1)
+
+                if (pozitionInList < 124)
                 {
-                    AddChild(new LeftArrowCombo(playerNumeber, difficulty));
+                    if (readComboFiles.leftArrows[pozitionInList].Contains("1"))
+                    {
+                        AddChild(new LeftArrowCombo(playerNumeber, difficulty, pozitionInList));
+                    }
+                    if (readComboFiles.middleArrows[pozitionInList].Contains("1"))
+                    {
+                        AddChild(new MiddleArrowCombo(playerNumeber, difficulty, pozitionInList));
+                    }
+                    if (readComboFiles.rightArrows[pozitionInList].Contains("1"))
+                    {
+                        AddChild(new RightArrowCombo(playerNumeber, difficulty, pozitionInList));
+                    }
+                        
+                    
+                    pozitionInList++;
                 }
-                else if (copy == 2)
-                {
-                    AddChild(new UpArrowCombo(playerNumeber, difficulty));
-                }
-                else
-                {
-                    AddChild(new RightArrowCombo(playerNumeber, difficulty));
-                }
+                
             }
         }
 
@@ -200,9 +256,14 @@ namespace GXPEngine
             foreach(GameObject child in gameObjects)
             {
                 if (child.y > game.height)
-                    child.Remove();
+                    child.Destroy();
             }
             //Console.WriteLine(this.GetChildCount());
+        }
+
+        public int ReturnComboScore()
+        {
+            return comboScore;
         }
     }
 }

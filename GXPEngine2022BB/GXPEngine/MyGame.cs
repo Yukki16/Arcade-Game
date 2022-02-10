@@ -4,6 +4,10 @@ using TiledMapParser;
 using System.Drawing;                           // System.Drawing contains drawing tools such as Color definitions
 public class MyGame : Game
 {
+
+	/// </info>
+	/// I have a lot of code repetition from time to time :<, maybe you can take care of it, or I ll do it next week
+	/// </info>
 	SceneManager sceneManager;
 
 	public MyGame() : base(Settings.Width, Settings.Height, Settings.FullScreen, true, Settings.ScreenResolutionX, Settings.ScreenResolutionY)
@@ -22,8 +26,6 @@ public class MyGame : Game
 
 	static void Main()
 	{
-		
-		
 		Settings.Load();
 		if (Settings.FullScreen)
 		{

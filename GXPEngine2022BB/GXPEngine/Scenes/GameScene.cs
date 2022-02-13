@@ -51,9 +51,32 @@ namespace GXPEngine
             this.AddChild(sceneUI);
         }
 
-        public void InflictDamage()
+        public void InflictDamage(int numberInList)
         {
-           
+            bool inflictDamage = true;
+            ArrowCombo[] arrowslistPlayerOne = playerOne.FindObjectsOfType<ArrowCombo>();
+            ArrowCombo[] arrowslistPlayerTwo = playerOne.FindObjectsOfType<ArrowCombo>();
+
+            foreach(ArrowCombo arrows in arrowslistPlayerOne)
+            {
+                if(arrows.pozitionInList == numberInList)
+                {
+                    inflictDamage = false;
+                    break;
+                }    
+            }
+
+            foreach(ArrowCombo arrows in arrowslistPlayerTwo)
+            {
+                if (arrows.pozitionInList == numberInList)
+                {
+                    inflictDamage = false;
+                    break;
+                }
+            }
+
+            if (inflictDamage)
+            {
                 int tempComboScoreP1 = playerOne.ReturnComboScore();
                 int tempComboScoreP2 = playerTwo.ReturnComboScore();
 
@@ -75,7 +98,8 @@ namespace GXPEngine
                     sceneUI.playerOneHp--;
                 }
                 sceneUI.UpdateHealth();
-            
+            }
+            //inflictDamage = true;
         }
     }
 }

@@ -82,7 +82,7 @@ namespace GXPEngine
             GameObject[] middleArrows = this.FindObjectsOfType<MiddleArrowCombo>();
             GameObject[] rightArrows = this.FindObjectsOfType<RightArrowCombo>();
 
-            bool inflictDamage = false;
+            //bool inflictDamage = false;
 
             if (Input.GetKeyDown(keyUp))
             {
@@ -91,11 +91,12 @@ namespace GXPEngine
                     if (destroiedOne)
                         break;
 
-                    if (readComboFiles.endCombo[middleA.pozitionInList + 1] == "1")
-                        inflictDamage = true;
 
                     if (upComboArrow.HitTest(middleA))
                     {
+                        if (readComboFiles.endCombo[middleA.pozitionInList + 1] == "1")
+                            theParent.InflictDamage(middleA.pozitionInList);
+
                         if (middleA.y - middleA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
@@ -132,11 +133,11 @@ namespace GXPEngine
                     if (destroiedOne)
                         break;
 
-                    if (readComboFiles.endCombo[leftA.pozitionInList + 1] == "1")
-                        inflictDamage = true;
 
                     if (leftComboArrow.HitTest(leftA))
                     {
+                        if (readComboFiles.endCombo[leftA.pozitionInList + 1] == "1")
+                            theParent.InflictDamage(leftA.pozitionInList);
                         if (leftA.y - leftA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
@@ -174,11 +175,11 @@ namespace GXPEngine
                     if (destroiedOne)
                         break;
                    
-                    if (readComboFiles.endCombo[rightA.pozitionInList + 1] == "1")
-                        inflictDamage = true;
 
                     if (rightComboArrow.HitTest(rightA))
                     {
+                        if (readComboFiles.endCombo[rightA.pozitionInList + 1] == "1")
+                            theParent.InflictDamage(rightA.pozitionInList);
                         if (rightA.y - rightA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
                             perfect++;
@@ -213,10 +214,7 @@ namespace GXPEngine
                 //Console.WriteLine(rightArrows.Length);
             }
 
-            if(inflictDamage)
-            {
-                theParent.InflictDamage();
-            }
+
             destroiedOne = false;
             
         }
@@ -255,8 +253,16 @@ namespace GXPEngine
             List<GameObject> gameObjects = this.GetChildren();
             foreach(GameObject child in gameObjects)
             {
+
                 if (child.y > game.height)
+                {
+                    if (child is ArrowCombo a)
+                    {
+                        if(readComboFiles.endCombo[a.pozitionInList + 1] == "1")
+                        theParent.InflictDamage(a.pozitionInList);
+                    }
                     child.Destroy();
+                }
             }
             //Console.WriteLine(this.GetChildCount());
         }

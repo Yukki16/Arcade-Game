@@ -33,6 +33,7 @@ namespace GXPEngine
 
         public void DestroyArrow()
         {
+            //Console.WriteLine("done for");
             this.Destroy();
         }
     }

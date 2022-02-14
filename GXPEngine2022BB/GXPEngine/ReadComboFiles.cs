@@ -22,7 +22,7 @@ namespace GXPEngine
             {
                 while (!rd.EndOfStream)
                 {
-                    var splits = rd.ReadLine().Split(',');
+                    var splits = rd.ReadLine().Split(';');
                     leftArrows.Add(splits[0]);
                     middleArrows.Add(splits[1]);
                     rightArrows.Add(splits[2]);

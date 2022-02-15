@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Scenes\DifficultyMenu.cs" />
     <Compile Include="Scenes\SelectSongMenu.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="Scenes\Character.cs" />

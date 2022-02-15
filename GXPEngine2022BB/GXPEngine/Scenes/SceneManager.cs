@@ -16,6 +16,7 @@ namespace GXPEngine
 
         public enum Difficulty
         {
+            None,
             Easy,
             Medium,
             Hard
@@ -37,12 +38,12 @@ namespace GXPEngine
             
         }
 
-        public void LoadScene(Scenes sceneToLoad, SFX.Songs songToLoad)
+        public void LoadScene(Scenes sceneToLoad, SFX.Songs songToLoad, Difficulty difficulty = Difficulty.None)
         {
             if (sceneToLoad == Scenes.GameScene)
             {
                 CleanOtherScenes();
-                this.AddChild(new GameScene(Difficulty.Hard));
+                this.AddChild(new GameScene(difficulty));
                 sfx.PlaySong(songToLoad);     
             }
 
@@ -54,9 +55,16 @@ namespace GXPEngine
 
             if(sceneToLoad == Scenes.SongMenu)
             {
-                Console.WriteLine("loaded");
+                //Console.WriteLine("loaded");
                 CleanOtherScenes();
                 this.AddChild(new SelectSongMenu(this, this.sfx));
+            }
+
+            if(sceneToLoad == Scenes.DifficultyScene)
+            {
+                CleanOtherScenes();
+                sfx.PlaySong(SFX.Songs.None);
+                this.AddChild(new DifficultyMenu(this, songToLoad));
             }
         }
 

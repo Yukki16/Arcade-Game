@@ -28,7 +28,10 @@ namespace GXPEngine
         SceneManager.Player playerNumeber;
         SceneManager.Difficulty difficulty;
 
-        int perfect, half, whiff;
+        int spawnTime;
+        int numberOfTiles;
+
+        //int perfect, half, whiff;
 
         int keyLeft, keyUp, keyRight; //the custom keys for the input of the player (will be read from Settings)
         public PlayerKeysCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty, GameScene gameScene)
@@ -59,6 +62,17 @@ namespace GXPEngine
             AddChild(leftComboArrow);
             AddChild(upComboArrow);
             AddChild(rightComboArrow);
+
+            if(difficulty == SceneManager.Difficulty.Easy)
+            {
+                spawnTime = 750;
+                numberOfTiles = Settings.Song_1TilesEasy;
+            }
+            else
+            {
+                spawnTime = 500;
+                numberOfTiles = Settings.Song_1TilesMedium_Hard;
+            }
         }
 
         public void SetKeys(int left, int up, int right)
@@ -97,19 +111,19 @@ namespace GXPEngine
                     {
                         if (middleA.y - middleA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
-                            perfect++;
+                            //perfect++;
                             comboScore += 1000;
                             score += 1000;
                         }
                         else if ((middleA.y - middleA.height / 2 >= upComboArrow.y && middleA.y - middleA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (middleA.y - middleA.height / 2 >= upComboArrow.y - upComboArrow.height && middleA.y - middleA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
-                            half++;
+                            //half++;
                             comboScore += 700;
                             score += 700;
                         }
                         else
                         {
-                            whiff++;
+                            //whiff++;
                             comboScore += 500;
                             score += 500;
                         }
@@ -141,19 +155,19 @@ namespace GXPEngine
                     {
                         if (leftA.y - leftA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
-                            perfect++;
+                            //perfect++;
                             comboScore += 1000;
                             score += 1000;
                         }
                         else if ((leftA.y - leftA.height / 2 >= upComboArrow.y && leftA.y - leftA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (leftA.y - leftA.height / 2 >= upComboArrow.y - upComboArrow.height && leftA.y - leftA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
-                            half++;
+                            //half++;
                             comboScore += 700;
                             score += 700;
                         }
                         else
                         {
-                            whiff++;
+                            //whiff++;
                             comboScore += 500;
                             score += 500;
                         }
@@ -184,19 +198,19 @@ namespace GXPEngine
                     {
                         if (rightA.y - rightA.height / 2 == upComboArrow.y - upComboArrow.height / 2)
                         {
-                            perfect++;
+                            //perfect++;
                             comboScore += 1000;
                             score += 1000;
                         }
                         else if ((rightA.y - rightA.height / 2 >= upComboArrow.y && rightA.y - rightA.height / 2 < upComboArrow.y - upComboArrow.height / 2) || (rightA.y - rightA.height / 2 >= upComboArrow.y - upComboArrow.height && rightA.y - rightA.height / 2 > upComboArrow.y - upComboArrow.height / 2))
                         {
-                            half++;
+                            //half++;
                             comboScore += 700;
                             score += 700;
                         }
                         else
                         {
-                            whiff++;
+                            //whiff++;
                             comboScore += 500;
                             score += 500;
                         }
@@ -226,11 +240,11 @@ namespace GXPEngine
 
         private void SpawnArrows()  //used for now, I will change later to read from a file all the arrows that corespond to the song //// Done
         {
-            if (Time.time - timer > 500) //for now spawns an arrow every 1 second from .cvs file
+            if (Time.time - timer > spawnTime) //for now spawns an arrow every 1 second from .cvs file
             {
                 timer = Time.time;
 
-                if (pozitionInList < 124)
+                if (pozitionInList < numberOfTiles)
                 {
                     if (readComboFiles.leftArrows[pozitionInList].Contains("1"))
                     {

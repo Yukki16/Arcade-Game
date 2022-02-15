@@ -25,3 +25,5 @@ P2Down=284
 //P2Left=306
 //P2Right=308
 //P2Down=304
+Song_1TilesEasy=186
+Song_1TilesMedium_Hard=248

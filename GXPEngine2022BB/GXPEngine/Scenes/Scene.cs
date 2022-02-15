@@ -32,7 +32,7 @@ namespace GXPEngine
 
                 if (Input.GetKeyDown(Key.D) || Input.GetKeyDown(Key.RIGHT))
                 {
-                    if (buttonIndex < buttons.Length)
+                    if (buttonIndex < buttons.Length - 1)
                     {
                         buttons[buttonIndex].highlighted = false;
                         buttonIndex++;

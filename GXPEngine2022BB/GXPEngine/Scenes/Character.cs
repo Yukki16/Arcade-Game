@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GXPEngine
+﻿namespace GXPEngine
 {
     class Character : GameObject
     {
@@ -11,7 +6,8 @@ namespace GXPEngine
         {
             idle,
             attack,
-            defence
+            defence,
+            defeated
         }
 
         playerState animationState = playerState.idle;
@@ -52,17 +48,25 @@ namespace GXPEngine
             {
                 animations.SetCycle(30, 10);
             }
-            
-            if(animations.currentFrame == 29 || animations.currentFrame == 39)
+
+            if (animationState == playerState.defeated)
+            {
+                animations.SetCycle(10, 10);
+            }
+
+            if (animations.currentFrame == 29 || animations.currentFrame == 39)
             {
                 animationState = playerState.idle;
             }
-            animations.Animate(0.075f);
+
+            if (!(animations.currentFrame == 19))
+                animations.Animate(0.075f);
         }
 
         public void ChangeState(playerState state)
         {
-            animationState = state;
+            if (animationState != playerState.defeated)
+                animationState = state;
         }
     }
 }

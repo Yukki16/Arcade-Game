@@ -1,8 +1,5 @@
 ﻿using GXPEngine.Scenes;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GXPEngine
 {
@@ -11,7 +8,9 @@ namespace GXPEngine
         public enum Player
         {
             P1,
-            P2
+            P2,
+            None,
+            Null
         }
 
         public enum Difficulty
@@ -29,13 +28,26 @@ namespace GXPEngine
             DifficultyScene,
             PlayerMenu,
             SongMenu,
-            HighScore
+            HighScore,
+            None
         }
 
         public SFX sfx = new SFX();
+
+        string[] playerOneFilePath;
+        string[] playerTwoFilePath;
+
+        public int playerOneFileIndex = 0;
+        public int playerTwoFileIndex = 0;
         public SceneManager()
         {
-            
+            playerOneFilePath = new string[2];
+            playerOneFilePath[0] = "Art/Player/girl_red.png";
+            playerOneFilePath[1] = "Art/Player/jackson_red.png";
+
+            playerTwoFilePath = new string[2];
+            playerTwoFilePath[0] = "Art/Player/girl_blue.png";
+            playerTwoFilePath[1] = "Art/Player/jackson_blue.png";
         }
 
         public void LoadScene(Scenes sceneToLoad, SFX.Songs songToLoad, Difficulty difficulty = Difficulty.None)
@@ -43,35 +55,41 @@ namespace GXPEngine
             if (sceneToLoad == Scenes.GameScene)
             {
                 CleanOtherScenes();
-                this.AddChild(new GameScene(difficulty));
-                sfx.PlaySong(songToLoad);     
+                this.AddChild(new GameScene(difficulty, playerOneFilePath[playerOneFileIndex], playerTwoFilePath[playerTwoFileIndex], this, songToLoad));
+                sfx.PlaySong(songToLoad);
             }
 
-            if(sceneToLoad == Scenes.MainMenu)
+            if (sceneToLoad == Scenes.MainMenu)
             {
                 CleanOtherScenes();
                 this.AddChild(new MainMenu(this));
             }
 
-            if(sceneToLoad == Scenes.SongMenu)
+            if (sceneToLoad == Scenes.SongMenu)
             {
                 //Console.WriteLine("loaded");
                 CleanOtherScenes();
                 this.AddChild(new SelectSongMenu(this, this.sfx));
             }
 
-            if(sceneToLoad == Scenes.DifficultyScene)
+            if (sceneToLoad == Scenes.DifficultyScene)
             {
                 CleanOtherScenes();
-                sfx.PlaySong(SFX.Songs.None);
+                sfx.PlaySong(SFX.Songs.MenuSong);
                 this.AddChild(new DifficultyMenu(this, songToLoad));
+            }
+
+            if (sceneToLoad == Scenes.Settings)
+            {
+                CleanOtherScenes();
+                this.AddChild(new SettingsScene(this, this.sfx));
             }
         }
 
         private void CleanOtherScenes()
         {
             List<GameObject> allScenes = this.GetChildren();
-            foreach(GameObject aScenes in allScenes)
+            foreach (GameObject aScenes in allScenes)
             {
                 aScenes.Destroy();
             }

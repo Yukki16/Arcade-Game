@@ -1,17 +1,13 @@
 ﻿using GXPEngine.Core;
 using System;
 using System.Drawing;
-using System.Drawing.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GXPEngine
 {
     class UI : GameObject
     {
         EasyDraw timerUI;
-        int time;
+        public int time;
         float timerVerticalPoz = 75;
         //float fontSize = 35;
 
@@ -28,15 +24,29 @@ namespace GXPEngine
         EasyDraw comboUI;
 
         Font minecraftFont;
-        public UI()
+        public UI(SFX.Songs songPlaying)
         {
-            minecraftFont = Utils.LoadFont("Fonts/MINECRAFT.ttf", 40); 
-            time = 124;
+            if (songPlaying == SFX.Songs.Song1)
+            {
+                time = 124;
+            }
+            else if(songPlaying == SFX.Songs.Song2)
+            {
+                time = 104;
+            }
+            else if(songPlaying == SFX.Songs.Song3)
+            {
+                time = 118;
+            }
+
+
+            minecraftFont = Utils.LoadFont("Fonts/MINECRAFT.ttf", 40);
+
             timerUI = new EasyDraw(Settings.Width, Settings.Height, false);
             timerUI.SetXY(0, 0);
             timerUI.TextAlign(CenterMode.Center, CenterMode.Center);
 
-            
+
             timerUI.TextFont(minecraftFont);
             if (time % 60 < 10)
             {
@@ -51,7 +61,7 @@ namespace GXPEngine
             this.AddChild(timerUI);
 
             healthUI = new EasyDraw(Settings.Width, Settings.Height, false);
-            healthUI.Fill(211, 39 ,164);
+            healthUI.Fill(211, 39, 164);
             healthUI.NoStroke();
 
             playerOneHpPoz = new Vector2(0, 45);
@@ -82,7 +92,7 @@ namespace GXPEngine
 
         private void UpdateTimer()
         {
-            if(Time.time - clock >= 1000)
+            if (Time.time - clock >= 1000)
             {
                 clock = Time.time;
                 time--;

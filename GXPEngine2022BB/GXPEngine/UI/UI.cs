@@ -1,5 +1,7 @@
 ﻿using GXPEngine.Core;
 using System;
+using System.Drawing;
+using System.Drawing.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,7 +13,7 @@ namespace GXPEngine
         EasyDraw timerUI;
         int time;
         float timerVerticalPoz = 75;
-        float fontSize = 35;
+        //float fontSize = 35;
 
         float clock = 0f;
 
@@ -22,15 +24,20 @@ namespace GXPEngine
 
         private Vector2 playerOneHpPoz;
         private Vector2 playerTwoHpPoz;
+
+        EasyDraw comboUI;
+
+        Font minecraftFont;
         public UI()
         {
+            minecraftFont = Utils.LoadFont("Fonts/MINECRAFT.ttf", 40); 
             time = 124;
             timerUI = new EasyDraw(Settings.Width, Settings.Height, false);
             timerUI.SetXY(0, 0);
             timerUI.TextAlign(CenterMode.Center, CenterMode.Center);
 
             
-            timerUI.TextFont("MINECRAFT", fontSize);
+            timerUI.TextFont(minecraftFont);
             if (time % 60 < 10)
             {
                 timerUI.Text(time / 60 + ":0" + time % 60, timerUI.width / 2, timerVerticalPoz, false);
@@ -44,7 +51,7 @@ namespace GXPEngine
             this.AddChild(timerUI);
 
             healthUI = new EasyDraw(Settings.Width, Settings.Height, false);
-            healthUI.Fill(255, 0, 0);
+            healthUI.Fill(211, 39 ,164);
             healthUI.NoStroke();
 
             playerOneHpPoz = new Vector2(0, 45);
@@ -55,6 +62,17 @@ namespace GXPEngine
                                                                                       // the corner of the second hp bar is top right, but why? I am so confused
 
             this.AddChild(healthUI);
+
+            comboUI = new EasyDraw(Settings.Width, Settings.Height, false);
+            comboUI.SetXY(0, 0);
+
+            comboUI.TextFont(minecraftFont);
+            //comboUI.TextSize(40);
+            comboUI.TextAlign(CenterMode.Center, CenterMode.Center);
+
+            comboUI.Text("x0", game.width / 3f, 200, false);
+            comboUI.Text("x0", game.width / 1.5f, 200, false);
+            this.AddChild(comboUI);
         }
 
         private void Update()
@@ -87,6 +105,13 @@ namespace GXPEngine
             healthUI.Rect(playerTwoHpPoz.x, playerTwoHpPoz.y, 170 * playerTwoHp, 50);
 
             Console.WriteLine(playerOneHp + " " + playerTwoHp);
+        }
+
+        public void UpdateCombo(float playerOneCombo, float playerTwoCombo)
+        {
+            comboUI.ClearTransparent();
+            comboUI.Text("x" + playerOneCombo, game.width / 3f, 200, false);
+            comboUI.Text("x" + playerTwoCombo, game.width / 1.5f, 200, false);
         }
     }
 }

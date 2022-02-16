@@ -94,6 +94,10 @@ namespace GXPEngine {
 		// enter:
 		public static int Menu=294;
 
+
+		public static int Song_1TilesEasy;
+		public static int Song_1TilesMedium_Hard;
+
 		/// <summary>
 		/// Load new values from the file settings.txt
 		/// </summary>

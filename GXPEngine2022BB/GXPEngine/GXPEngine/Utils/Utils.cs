@@ -28,7 +28,7 @@ namespace GXPEngine
 			if (!fontIndex.ContainsKey(filename)) {
 				fontIndex[filename]=new PrivateFontCollection();
 				fontIndex[filename].AddFontFile(filename);
-				//Console.WriteLine("Loaded new font: "+fontIndex[filename].Families[0]);
+				Console.WriteLine("Loaded new font: "+fontIndex[filename].Families[0]);
 			} 
 			return new Font(fontIndex[filename].Families[0], fontSize, fontStyle);
 		}

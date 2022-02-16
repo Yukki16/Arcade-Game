@@ -14,11 +14,11 @@ namespace GXPEngine
         {
             if(difficulty == SceneManager.Difficulty.Easy)
             {
-                speed = 1;
+                speed = 2;
             }
             else if (difficulty == SceneManager.Difficulty.Medium)
             {
-                speed = 2;
+                speed = 2.5f;
             }else
             {
                 speed = 3;
@@ -33,6 +33,7 @@ namespace GXPEngine
 
         public void DestroyArrow()
         {
+            //Console.WriteLine("done for");
             this.Destroy();
         }
     }

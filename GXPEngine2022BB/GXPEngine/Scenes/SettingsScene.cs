@@ -40,37 +40,37 @@ namespace GXPEngine.Scenes
 
             buttons = new Button[7];
 
-            buttons[0] = new Button("Art/Buttons/SettingsArrowLeft.png", true, this, -1, SceneManager.Player.P1);
+            buttons[0] = new Button("Art/Buttons/arrow_highlight.png", true, this, -1, SceneManager.Player.P1);
             buttons[0].SetOrigin(buttons[0].width / 2, buttons[0].height / 2);
             buttons[0].SetXY(game.width / 4, game.height / 5);
             AddChild(buttons[0]);
 
-            buttons[1] = new Button("Art/Buttons/SettingsArrowRight.png", false, this, 1, SceneManager.Player.P1);
+            buttons[1] = new Button("Art/Buttons/arrow_right_highlight.png", false, this, 1, SceneManager.Player.P1);
             buttons[1].SetOrigin(buttons[1].width / 2, buttons[1].height / 2);
             buttons[1].SetXY(3 * game.width / 4, game.height / 5);
             AddChild(buttons[1]);
 
-            buttons[2] = new Button("Art/Buttons/SettingsArrowLeft.png", false, this, -1, SceneManager.Player.P2);
+            buttons[2] = new Button("Art/Buttons/arrow_highlight.png", false, this, -1, SceneManager.Player.P2);
             buttons[2].SetOrigin(buttons[2].width / 2, buttons[2].height / 2);
             buttons[2].SetXY(game.width / 4, 2 * game.height / 5);
             AddChild(buttons[2]);
 
-            buttons[3] = new Button("Art/Buttons/SettingsArrowRight.png", false, this, 1, SceneManager.Player.P2);
+            buttons[3] = new Button("Art/Buttons/arrow_right_highlight.png", false, this, 1, SceneManager.Player.P2);
             buttons[3].SetOrigin(buttons[3].width / 2, buttons[3].height / 2);
             buttons[3].SetXY(3 * game.width / 4, 2 * game.height / 5);
             AddChild(buttons[3]);
 
-            buttons[4] = new Button("Art/Buttons/SettingsArrowLeft.png", false, this, -1, SceneManager.Player.None);
+            buttons[4] = new Button("Art/Buttons/arrow_highlight.png", false, this, -1, SceneManager.Player.None);
             buttons[4].SetOrigin(buttons[4].width / 2, buttons[4].height / 2);
             buttons[4].SetXY(game.width / 4, 3 * game.height / 5);
             AddChild(buttons[4]);
 
-            buttons[5] = new Button("Art/Buttons/SettingsArrowRight.png", false, this, 1, SceneManager.Player.None);
+            buttons[5] = new Button("Art/Buttons/arrow_right_highlight.png", false, this, 1, SceneManager.Player.None);
             buttons[5].SetOrigin(buttons[5].width / 2, buttons[5].height / 2);
             buttons[5].SetXY(3 * game.width / 4, 3 * game.height / 5);
             AddChild(buttons[5]);
 
-            buttons[6] = new Button("Art/Buttons/placeholder_button_menu.png", this.sceneManager, SceneManager.Scenes.MainMenu, SFX.Songs.MenuSong, false);
+            buttons[6] = new Button("Art/Buttons/back_button.png", this.sceneManager, SceneManager.Scenes.MainMenu, SFX.Songs.MenuSong, false);
             buttons[6].SetOrigin(buttons[6].width / 2, buttons[6].height / 2);
             buttons[6].SetXY(game.width / 2, 4 * game.height / 5);
             AddChild(buttons[6]);

@@ -28,7 +28,7 @@ namespace GXPEngine.Scenes
 
 			buttons = new Button[1];
 
-			buttons[0] = new Button("Art/Buttons/placeholder_button_menu.png", this.sceneManager, SceneManager.Scenes.MainMenu, SFX.Songs.MenuSong, true);
+			buttons[0] = new Button("Art/Buttons/back_button.png", this.sceneManager, SceneManager.Scenes.MainMenu, SFX.Songs.MenuSong, true);
 			buttons[0].SetOrigin(buttons[0].width / 2, buttons[0].height / 2);
 			buttons[0].SetXY(game.width / 2, 4 * game.height / 5);
 			AddChild(buttons[0]);

@@ -29,6 +29,7 @@ namespace GXPEngine
             PlayerMenu,
             SongMenu,
             HighScore,
+            EndOfTheGame,
             None
         }
 
@@ -50,18 +51,19 @@ namespace GXPEngine
             playerTwoFilePath[1] = "Art/Player/jackson_blue.png";
         }
 
-        public void LoadScene(Scenes sceneToLoad, SFX.Songs songToLoad, Difficulty difficulty = Difficulty.None)
+        public void LoadScene(Scenes sceneToLoad, SFX.Songs songToLoad, Difficulty difficulty = Difficulty.None, int p1Score = 0, int p2Score = 0)
         {
             if (sceneToLoad == Scenes.GameScene)
             {
                 CleanOtherScenes();
-                this.AddChild(new GameScene(difficulty, playerOneFilePath[playerOneFileIndex], playerTwoFilePath[playerTwoFileIndex], this, songToLoad));
+                this.AddChild(new GameScene(difficulty, playerOneFilePath[playerOneFileIndex], playerTwoFilePath[playerTwoFileIndex], this, songToLoad, this.sfx));
                 sfx.PlaySong(songToLoad);
             }
 
             if (sceneToLoad == Scenes.MainMenu)
             {
                 CleanOtherScenes();
+                sfx.PlaySong(SFX.Songs.MenuSong);
                 this.AddChild(new MainMenu(this));
             }
 
@@ -82,7 +84,15 @@ namespace GXPEngine
             if (sceneToLoad == Scenes.Settings)
             {
                 CleanOtherScenes();
+                sfx.PlaySong(SFX.Songs.MenuSong);
                 this.AddChild(new SettingsScene(this, this.sfx));
+            }
+
+            if(sceneToLoad == Scenes.EndOfTheGame)
+            {
+                CleanOtherScenes();
+                sfx.PlaySong(songToLoad);
+                this.AddChild(new WinScene(p1Score, p2Score, this, this.playerOneFilePath[playerOneFileIndex], this.playerTwoFilePath[playerTwoFileIndex]));
             }
         }
 

@@ -24,6 +24,9 @@ namespace GXPEngine
         EasyDraw comboUI;
 
         Font minecraftFont;
+
+        public bool paused = false;
+
         public UI(SFX.Songs songPlaying)
         {
             if (songPlaying == SFX.Songs.Song1)
@@ -87,6 +90,7 @@ namespace GXPEngine
 
         private void Update()
         {
+            if(!paused)
             UpdateTimer();
         }
 

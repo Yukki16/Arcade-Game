@@ -8,6 +8,7 @@
             Song2,
             Song3,
             MenuSong,
+            VictorySFX,
             None
         }
 
@@ -18,6 +19,7 @@
         public Sound Song_2;
         public Sound Song_3;
         public Sound MenuSong;
+        public Sound VictorySFX;
 
         public int volume = 5;
         public SFX()
@@ -31,6 +33,7 @@
             Song_2 = new Sound("Music/Eieio_Song_2.mp3");
             Song_3 = new Sound("Music/Beat_it_song_3.mp3");
             MenuSong = new Sound("Music/Menu_song_v1.mp3");
+            VictorySFX = new Sound("Music/Victory_fanfare.mp3");
         }
 
         public void PlaySong(Songs songToPlay)
@@ -50,10 +53,19 @@
             {
                 currentSongPlaying = Song_3.Play(false, 0, volume / 10f, 0);
             }
-            else
+            else if(songToPlay == SFX.Songs.MenuSong)
             {
                 currentSongPlaying = MenuSong.Play(false, 0, volume / 10f, 0);
             }
+            else if (songToPlay == SFX.Songs.VictorySFX)
+            {
+                currentSongPlaying = VictorySFX.Play(false, 0, volume / 10f, 0);
+            }
+        }
+
+        public void PauseSong(bool pause)
+        {
+            currentSongPlaying.IsPaused = pause;
         }
     }
 }

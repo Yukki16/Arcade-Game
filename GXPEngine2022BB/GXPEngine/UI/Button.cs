@@ -13,7 +13,7 @@ namespace GXPEngine
         public SFX.Songs desiredSong;
         private SceneManager.Difficulty difficulty;
 
-        
+        PauseMenu pauseMenu;
 
         public int increment;
 
@@ -33,9 +33,13 @@ namespace GXPEngine
             this.highlighted = highlight;
             this.settingsScene = settingsScene;
             this.increment = increment;
-            this.player = player;
+            this.player = player;         
+        }
 
-            
+        public Button(string path, bool highlight, PauseMenu pauseMenu) : base(path)
+        {
+            this.highlighted = highlight;
+            this.pauseMenu = pauseMenu;
         }
 
         private void Update()
@@ -52,6 +56,12 @@ namespace GXPEngine
                     if (settingsScene != null)
                     {
                         settingsScene.UpdateUI(player);
+                    }
+
+                    if (pauseMenu != null)
+                    {
+                        pauseMenu.PauseTheGame(false);
+                        pauseMenu.Remove();
                     }
                 }
             }

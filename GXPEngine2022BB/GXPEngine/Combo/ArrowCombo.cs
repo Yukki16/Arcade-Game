@@ -4,6 +4,8 @@
     {
         private float speed = 1;
         public int pozitionInList;
+
+        public bool paused = false;
         public ArrowCombo(string texturePath, SceneManager.Difficulty difficulty) : base(texturePath)
         {
             if (difficulty == SceneManager.Difficulty.Easy)
@@ -23,6 +25,7 @@
         }
         public void Update()
         {
+            if(!paused)
             y += speed;
         }
 

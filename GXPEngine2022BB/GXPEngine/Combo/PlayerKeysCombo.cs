@@ -13,7 +13,7 @@ namespace GXPEngine
 
         bool destroiedOne = false;
 
-        private int score;
+        public int score;
         public int comboScore;
         public int comboHit;
 
@@ -29,14 +29,38 @@ namespace GXPEngine
         int numberOfTiles;
 
         public bool dead = false;
+        public bool paused = false;
 
         //int perfect, half, whiff;
 
         int keyLeft, keyUp, keyRight; //the custom keys for the input of the player (will be read from Settings)
-        public PlayerKeysCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty, GameScene gameScene)
+        public PlayerKeysCombo(SceneManager.Player playerNumber, SceneManager.Difficulty difficulty, GameScene gameScene, SFX.Songs song)
         {
             this.theParent = gameScene;
-            readComboFiles = new ReadComboFiles("MusicCombos/Song_1_easy.csv");
+
+            string difficultyFile;
+
+            if(difficulty == SceneManager.Difficulty.Easy)
+            {
+                difficultyFile = "easy";
+            }
+            else
+            {
+                difficultyFile = "medium_hard";
+            }
+
+            if (song == SFX.Songs.Song1)
+            {
+                readComboFiles = new ReadComboFiles("MusicCombos/Song_1_" + difficultyFile + ".csv");
+            }
+            else if(song == SFX.Songs.Song2)
+            {
+                readComboFiles = new ReadComboFiles("MusicCombos/Song_2_" + difficultyFile + ".csv");
+            }
+            else if(song == SFX.Songs.Song3)
+            {
+                readComboFiles = new ReadComboFiles("MusicCombos/Song_3_" + difficultyFile + ".csv");
+            }
 
             this.difficulty = difficulty;
             this.playerNumeber = playerNumber;
@@ -65,13 +89,12 @@ namespace GXPEngine
             if (difficulty == SceneManager.Difficulty.Easy)
             {
                 spawnTime = 750;
-                numberOfTiles = Settings.Song_1TilesEasy;
             }
             else
             {
                 spawnTime = 500;
-                numberOfTiles = Settings.Song_1TilesMedium_Hard;
             }
+                numberOfTiles = readComboFiles.leftArrows.Count;
         }
 
         public void SetKeys(int left, int up, int right)
@@ -85,6 +108,11 @@ namespace GXPEngine
         {
             if (dead)
                 return;
+            if(paused)
+            {
+                //PauseComboTiles();
+                return;
+            }
             this.Combo();
             SpawnArrows();
             ClearArrows();
@@ -290,9 +318,13 @@ namespace GXPEngine
             //Console.WriteLine(this.GetChildCount());
         }
 
-        public int ReturnComboScore()
+        public void PauseComboTiles()
         {
-            return comboScore;
+            ArrowCombo[] arrowCombo = this.FindObjectsOfType<ArrowCombo>();
+            foreach(ArrowCombo arrow in arrowCombo)
+            {
+                arrow.paused = this.paused;
+            }
         }
     }
 }

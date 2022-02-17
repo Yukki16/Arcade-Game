@@ -7,12 +7,15 @@
             idle,
             attack,
             defence,
-            defeated
+            defeated,
+            winner
         }
 
         playerState animationState = playerState.idle;
 
         AnimationSprite animations;
+
+        bool stopAnimating = false;
         public Character(string characterName, SceneManager.Player playerNumber)
         {
             animations = new AnimationSprite(characterName, 10, 5);
@@ -54,13 +57,23 @@
                 animations.SetCycle(10, 10);
             }
 
+            if (animationState == playerState.winner)
+            {
+                animations.SetCycle(0, 10);
+            }
+
             if (animations.currentFrame == 29 || animations.currentFrame == 39)
             {
                 animationState = playerState.idle;
             }
 
-            if (!(animations.currentFrame == 19))
+            if (animations.currentFrame == 19 || animations.currentFrame == 9)
+                stopAnimating = true;
+
+            if (!stopAnimating)
                 animations.Animate(0.075f);
+
+            // System.Console.WriteLine(animations.currentFrame);
         }
 
         public void ChangeState(playerState state)

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GXPEngine.Scenes;
+using System;
 
 namespace GXPEngine
 {
@@ -6,19 +7,24 @@ namespace GXPEngine
     {
         Sprite overlay;
 
-        UI sceneUI;
+        public UI sceneUI;
 
-        PlayerKeysCombo playerOne;
-        PlayerKeysCombo playerTwo;
+        public PlayerKeysCombo playerOne;
+        public PlayerKeysCombo playerTwo;
 
         Character playerOneCharacter;
         Character playerTwoCharacter;
 
         SceneManager sceneManager;
+        public SFX sfx;
 
-        public GameScene(SceneManager.Difficulty difficulty, string playerOneFile, string playerTwoFile, SceneManager sceneManager, SFX.Songs songPlaying) : base()
+        PauseMenu pauseMenu;
+        public bool addedThePauseMenu = false;
+
+        public GameScene(SceneManager.Difficulty difficulty, string playerOneFile, string playerTwoFile, SceneManager sceneManager, SFX.Songs songPlaying, SFX sfx) : base()
         {
             this.sceneManager = sceneManager;
+            this.sfx = sfx;
 
             background = new Sprite("Art/Backgrounds/beat_it_background_final_big.png");
             background.SetXY(0, 0);
@@ -29,7 +35,7 @@ namespace GXPEngine
             this.AddChild(overlay);
 
             //the arrows that fall down
-            playerOne = new PlayerKeysCombo(SceneManager.Player.P1, difficulty, this);
+            playerOne = new PlayerKeysCombo(SceneManager.Player.P1, difficulty, this, songPlaying);
             playerOne.SetKeys(Settings.P1Left, Settings.P1Up, Settings.P1Right);
             this.AddChild(playerOne);
 
@@ -39,7 +45,7 @@ namespace GXPEngine
             this.AddChild(playerOneCharacter);
 
             //arrows that fall down
-            playerTwo = new PlayerKeysCombo(SceneManager.Player.P2, difficulty, this);
+            playerTwo = new PlayerKeysCombo(SceneManager.Player.P2, difficulty, this, songPlaying);
             playerTwo.SetKeys(Settings.P2Left, Settings.P2Up, Settings.P2Right);
             this.AddChild(playerTwo);
 
@@ -51,13 +57,23 @@ namespace GXPEngine
             sceneUI = new UI(songPlaying);
             sceneUI.SetXY(0, 0);
             this.AddChild(sceneUI);
+
+
+            pauseMenu = new PauseMenu(this.sceneManager, this);
         }
 
         new private void Update()
         {
             if(sceneUI.time == 0)
             {
-                sceneManager.LoadScene(SceneManager.Scenes.EndOfTheGame, SFX.Songs.MenuSong);
+                sceneManager.LoadScene(SceneManager.Scenes.EndOfTheGame, SFX.Songs.VictorySFX, SceneManager.Difficulty.None, playerOne.score, playerTwo.score);
+            }
+
+            if(Input.GetKeyDown(Key.P) && !addedThePauseMenu)
+            {
+                this.AddChild(pauseMenu);
+                pauseMenu.PauseTheGame(true);
+                //addedThePauseMenu = true;
             }
         }
 

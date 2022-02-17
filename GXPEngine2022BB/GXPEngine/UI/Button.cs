@@ -1,19 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GXPEngine.Scenes;
 
 namespace GXPEngine
 {
     class Button : Sprite
     {
-        SceneManager.Scenes sceneToLoad;
+        SceneManager.Scenes sceneToLoad = SceneManager.Scenes.None;
+        SceneManager.Player player;
         SceneManager sceneManager;
 
         public bool highlighted;
 
         public SFX.Songs desiredSong;
         private SceneManager.Difficulty difficulty;
+
+        
+
+        public int increment;
+
+        SettingsScene settingsScene;
 
         public Button(string path, SceneManager sceneManager, SceneManager.Scenes sceneToLoad, SFX.Songs songToPlay, bool highlight, SceneManager.Difficulty difficulty = SceneManager.Difficulty.None) : base(path)
         {
@@ -24,6 +28,16 @@ namespace GXPEngine
             this.difficulty = difficulty;
         }
 
+        public Button(string path, bool highlight, SettingsScene settingsScene, int increment, SceneManager.Player player) : base(path)
+        {
+            this.highlighted = highlight;
+            this.settingsScene = settingsScene;
+            this.increment = increment;
+            this.player = player;
+
+            
+        }
+
         private void Update()
         {
             if (this.highlighted)
@@ -32,7 +46,13 @@ namespace GXPEngine
 
                 if (Input.GetKeyDown(Key.W) || Input.GetKeyDown(Key.UP))
                 {
-                    sceneManager.LoadScene(sceneToLoad, desiredSong, difficulty);
+                    if (sceneToLoad != SceneManager.Scenes.None)
+                        sceneManager.LoadScene(sceneToLoad, desiredSong, difficulty);
+
+                    if (settingsScene != null)
+                    {
+                        settingsScene.UpdateUI(player);
+                    }
                 }
             }
             else

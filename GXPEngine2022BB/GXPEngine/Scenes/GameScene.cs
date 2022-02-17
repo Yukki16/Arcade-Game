@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GXPEngine
 {
@@ -17,11 +14,13 @@ namespace GXPEngine
         Character playerOneCharacter;
         Character playerTwoCharacter;
 
+        SceneManager sceneManager;
 
-
-        public GameScene(SceneManager.Difficulty difficulty) : base()
+        public GameScene(SceneManager.Difficulty difficulty, string playerOneFile, string playerTwoFile, SceneManager sceneManager, SFX.Songs songPlaying) : base()
         {
-            background = new Sprite("Art/Backgrounds/prototype_background_big.png");
+            this.sceneManager = sceneManager;
+
+            background = new Sprite("Art/Backgrounds/beat_it_background_final_big.png");
             background.SetXY(0, 0);
             this.AddChild(background);
 
@@ -29,29 +28,40 @@ namespace GXPEngine
             overlay.SetXY(0, 0);
             this.AddChild(overlay);
 
-            
+            //the arrows that fall down
             playerOne = new PlayerKeysCombo(SceneManager.Player.P1, difficulty, this);
             playerOne.SetKeys(Settings.P1Left, Settings.P1Up, Settings.P1Right);
             this.AddChild(playerOne);
 
-            playerOneCharacter = new Character("Art/Player/character_spritesheet.png", SceneManager.Player.P1);
+            //the character itself
+            playerOneCharacter = new Character(playerOneFile, SceneManager.Player.P1);
 
             this.AddChild(playerOneCharacter);
 
+            //arrows that fall down
             playerTwo = new PlayerKeysCombo(SceneManager.Player.P2, difficulty, this);
             playerTwo.SetKeys(Settings.P2Left, Settings.P2Up, Settings.P2Right);
             this.AddChild(playerTwo);
 
-            playerTwoCharacter = new Character("Art/Player/character_spritesheet.png", SceneManager.Player.P2);
+            //character itself
+            playerTwoCharacter = new Character(playerTwoFile, SceneManager.Player.P2);
 
             this.AddChild(playerTwoCharacter);
 
-            sceneUI = new UI();
+            sceneUI = new UI(songPlaying);
             sceneUI.SetXY(0, 0);
             this.AddChild(sceneUI);
         }
 
-        public void InflictDamage(int numberInList)
+        new private void Update()
+        {
+            if(sceneUI.time == 0)
+            {
+                sceneManager.LoadScene(SceneManager.Scenes.EndOfTheGame, SFX.Songs.MenuSong);
+            }
+        }
+
+        public void InflictDamage(int numberInList) // chechs from other player if he still has the other arrow, if not it changes the players state to dysplay animations
         {
             Console.WriteLine(numberInList);
             bool inflictDamage = true;
@@ -64,12 +74,12 @@ namespace GXPEngine
             foreach (ArrowCombo arrows in arrowslistPlayerOne)
             {
                 //Console.WriteLine(arrows.pozitionInList);
-                if(arrows.pozitionInList == numberInList)
+                if (arrows.pozitionInList == numberInList)
                 {
                     //Console.WriteLine("got here");
                     inflictDamage = false;
                     break;
-                }    
+                }
             }
 
             foreach (ArrowCombo arrows in arrowslistPlayerTwo)
@@ -104,10 +114,21 @@ namespace GXPEngine
                     playerTwoCharacter.ChangeState(Character.playerState.attack);
                     sceneUI.playerOneHp--;
                 }
-                
+
                 playerOne.comboScore = 0;
                 playerTwo.comboScore = 0;
                 sceneUI.UpdateHealth();
+
+                if (sceneUI.playerOneHp == 0)
+                {
+                    playerOneCharacter.ChangeState(Character.playerState.defeated);
+                    playerOne.dead = true;
+                }
+                if (sceneUI.playerTwoHp == 0)
+                {
+                    playerTwoCharacter.ChangeState(Character.playerState.defeated);
+                    playerTwo.dead = true;
+                }
             }
             //inflictDamage = true;
 

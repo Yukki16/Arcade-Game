@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace GXPEngine
 {
@@ -30,6 +27,8 @@ namespace GXPEngine
 
         int spawnTime;
         int numberOfTiles;
+
+        public bool dead = false;
 
         //int perfect, half, whiff;
 
@@ -63,7 +62,7 @@ namespace GXPEngine
             AddChild(upComboArrow);
             AddChild(rightComboArrow);
 
-            if(difficulty == SceneManager.Difficulty.Easy)
+            if (difficulty == SceneManager.Difficulty.Easy)
             {
                 spawnTime = 750;
                 numberOfTiles = Settings.Song_1TilesEasy;
@@ -84,6 +83,8 @@ namespace GXPEngine
 
         private void Update()
         {
+            if (dead)
+                return;
             this.Combo();
             SpawnArrows();
             ClearArrows();

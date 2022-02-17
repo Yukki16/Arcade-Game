@@ -1,10 +1,4 @@
-﻿using GXPEngine.Core;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace GXPEngine
+﻿namespace GXPEngine
 {
     abstract class ArrowCombo : Sprite
     {
@@ -12,14 +6,15 @@ namespace GXPEngine
         public int pozitionInList;
         public ArrowCombo(string texturePath, SceneManager.Difficulty difficulty) : base(texturePath)
         {
-            if(difficulty == SceneManager.Difficulty.Easy)
+            if (difficulty == SceneManager.Difficulty.Easy)
             {
                 speed = 2;
             }
             else if (difficulty == SceneManager.Difficulty.Medium)
             {
                 speed = 2.5f;
-            }else
+            }
+            else
             {
                 speed = 3;
             }
@@ -28,7 +23,7 @@ namespace GXPEngine
         }
         public void Update()
         {
-            y+=speed;
+            y += speed;
         }
 
         public void DestroyArrow()

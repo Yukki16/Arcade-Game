@@ -53,6 +53,7 @@
   <ItemGroup>
     <Compile Include="Scenes\DifficultyMenu.cs" />
     <Compile Include="Scenes\SelectSongMenu.cs" />
+    <Compile Include="Scenes\SettingsScene.cs" />
     <Compile Include="UI\Button.cs" />
     <Compile Include="Scenes\Character.cs" />
     <Compile Include="Combo\ArrowCombo.cs" />

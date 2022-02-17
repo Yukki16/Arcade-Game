@@ -109,6 +109,7 @@ namespace GXPEngine.Scenes
 
             easyDraw.Text("Character player 1", game.width / 2, game.height / 9, false);
             easyDraw.Text("Character player 2", game.width / 2, 3 * game.height / 9, false);
+            easyDraw.Text("Volume", game.width / 2, 4.5f * game.height / 9, false);
 
 
             sceneManager.playerOneFileIndex = playerOneCharactersIndex;

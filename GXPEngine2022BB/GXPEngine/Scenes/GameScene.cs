@@ -66,6 +66,7 @@ namespace GXPEngine
         {
             if(sceneUI.time == 0)
             {
+                sceneManager.currentHighscore = Mathf.Max(playerOne.score, playerTwo.score);
                 sceneManager.LoadScene(SceneManager.Scenes.EndOfTheGame, SFX.Songs.VictorySFX, SceneManager.Difficulty.None, playerOne.score, playerTwo.score);
             }
 

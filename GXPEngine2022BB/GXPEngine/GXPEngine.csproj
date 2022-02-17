@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Scenes\DifficultyMenu.cs" />
+    <Compile Include="Scenes\HighscoreMenu.cs" />
     <Compile Include="Scenes\PauseMenu.cs" />
     <Compile Include="Scenes\SelectSongMenu.cs" />
     <Compile Include="Scenes\SettingsScene.cs" />

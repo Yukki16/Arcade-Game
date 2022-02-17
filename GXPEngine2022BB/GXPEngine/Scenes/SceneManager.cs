@@ -40,6 +40,9 @@ namespace GXPEngine
 
         public int playerOneFileIndex = 0;
         public int playerTwoFileIndex = 0;
+
+        public int currentHighscore;
+        public SFX.Songs songOfScore;
         public SceneManager()
         {
             playerOneFilePath = new string[2];
@@ -58,6 +61,7 @@ namespace GXPEngine
                 CleanOtherScenes();
                 this.AddChild(new GameScene(difficulty, playerOneFilePath[playerOneFileIndex], playerTwoFilePath[playerTwoFileIndex], this, songToLoad, this.sfx));
                 sfx.PlaySong(songToLoad);
+                this.songOfScore = songToLoad;
             }
 
             if (sceneToLoad == Scenes.MainMenu)
@@ -93,6 +97,16 @@ namespace GXPEngine
                 CleanOtherScenes();
                 sfx.PlaySong(songToLoad);
                 this.AddChild(new WinScene(p1Score, p2Score, this, this.playerOneFilePath[playerOneFileIndex], this.playerTwoFilePath[playerTwoFileIndex]));
+            }
+
+            if (sceneToLoad == Scenes.HighScore)
+            {
+                CleanOtherScenes();
+                sfx.PlaySong(SFX.Songs.MenuSong);
+
+                HighscoreMenu highscore = new HighscoreMenu(this);
+                highscore.SaveData("Highscore.txt", currentHighscore, this.songOfScore);
+                this.AddChild(highscore);
             }
         }
 
